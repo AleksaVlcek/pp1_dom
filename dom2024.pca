@@ -1,0 +1,50 @@
+﻿		n = 1
+		adra = 2
+		i = 3
+		t1 = 4
+		p = 6
+		a = 1000
+		
+		ORG 8
+		
+		in n
+		mov adra, #a
+		in (adra), n
+		mov i, n
+		
+loop:	jsr del6
+		out (adra)
+		add adra, adra, 1
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		stop
+
+	
+		
+del6:	div t1, (adra), 10
+		mul t1, t1, 10
+		sub t1, (adra), t1
+		div p, t1, 2
+		mul p, p, 2
+		sub p, t1, p
+		beq p, 0, del3
+		beq t1, t1, rtr
+		
+del3:	mov t1, 0
+del3l:	div p, (adra), 10
+		mul p, p, 10
+		sub p, (adra), p
+		add t1, t1, p
+		div (adra), (adra), 10
+		bgt (adra), 0, del3l
+		
+		div p, t1, 3
+		mul p, p, 3
+		sub p, t1, p
+		
+		mov (adra), 1
+		beq p, 0, rtr1
+rtr:	mov (adra), 0
+
+rtr1:	rts
