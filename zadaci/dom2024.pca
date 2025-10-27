@@ -47,4 +47,5 @@ del3l:	div p, (adra), 10
 		beq p, 0, rtr1
 rtr:	mov (adra), 0
 
+
 rtr1:	rts
