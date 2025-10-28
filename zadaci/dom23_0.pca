@@ -1,0 +1,47 @@
+﻿		n = 1
+		adra = 2
+		i = 3
+		k = 4
+		t = 5
+		p = 6
+		q = 7
+		a = 1000
+		
+		ORG 8
+		
+ulaz:	in n
+		bgt 0, n, ulaz
+		beq 0, n, ulaz
+		in k
+		mov adra, #a
+		in (adra), n
+		mov i, n
+		
+		out (adra), n
+		
+loop:	jsr nzd
+		add adra, adra, 1
+		sub i, i, 1
+		bgt i, 0, loop
+		
+		mov adra, #a
+		out (adra), n
+		
+		stop
+
+
+nzd:	mov p, k
+		mov q, (adra)
+		bgt p, q, loop1
+		mov p, (adra)
+		mov q, k
+loop1:	div t, p, q
+		mul t, t, q
+		sub t, p, t
+		mov p, q
+		mov q, t
+		bgt t, 0, loop1
+		
+		mov (adra), p
+		
+		rts
